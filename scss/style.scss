@@ -1,6 +1,7 @@
 @import "sizing.scss";
 @import "spacing.scss";
 @import "flexbox.scss";
+@import "positions.scss";
 @import "colors.scss";
 
 html {
@@ -11,14 +12,6 @@ body {
     font-family: 'Poppins', sans-serif;
     font-size: 20px;
     transition: all 0.5s;
-}
-
-.p-relative {
-    position: relative;
-}
-
-.p-fixed {
-    position: fixed;
 }
 
 /* Mode contrasté */
@@ -42,10 +35,6 @@ a {
     &:hover {
         text-decoration: underline;
     }
-}
-
-img {
-    max-width: 100%;
 }
 
 li {

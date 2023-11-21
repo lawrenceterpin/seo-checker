@@ -1,291 +1,415 @@
-// Création du la div "#html5-checker"
-var seoChecker = document.createElement('div');
-seoChecker.setAttribute('id', 'seo-checker-panel');
-seoChecker.setAttribute('class', 'p-fixed d-flex flex-direction-column');
+/**
+ * Classe Seo Checker
+ * 
+ * @description
+ * 
+ * Testeur SEO de la page.
+ * Dans le panneau de droite, un rapport détaillé affiche le SEO et
+ * liste les erreurs et réussites pour chaque balise
+ */
+class SeoChecker {
 
-seoChecker.innerHTML = "<h2 class='m-0'>SEO Checker</h2>" +
-    "<p class='m-0'><span class='tags-errors error'></span></p>" +
-    "<p class='m-0'><span class='attributes-errors error'></span></p>" +
-    "<ul class='d-flex mb-2'><li class='col-6'><canvas id='tags'></canvas></li><li class='col-6'><canvas id='attributs'></canvas></li></ul>" +
-    "<ul id='seo-checker-tags-list'></ul>";
+    constructor(options) {
 
-document.body.prepend(seoChecker);
+        this.options = options;
+        this.tagsErrors = 0;
+        this.tagsSuccess = 0;
+        this.lengthErrors = 0;
+        this.lengthSuccess = 0;
+        this.attributesErrors = 0;
+        this.attributesSuccess = 0;
 
-// Création du bouton "#html5-checker-button"
-var seoCheckerButton = document.createElement('button');
-seoCheckerButton.setAttribute('id', 'seo-checker-button');
-seoCheckerButton.setAttribute('class', 'p-fixed m-1 p-1 d-flex align-items-center justify-content-center');
+        this.panelIsOpen = this.options.panel.open;
 
-seoCheckerButton.setAttribute('title', 'SEO Checker');
-
-seoCheckerButton.innerHTML = "<div><span class='p-fixed tags-errors p-1 align-items-center justify-content-center bg-error'></span></div>" +
-    "&nbsp;<img src='images/seo.png' alt='Seo Checker'>&nbsp;";
-
-document.body.prepend(seoCheckerButton);
-
-const tagsChart = document.getElementById('tags');
-const attributsChart = document.getElementById('attributs');
-
-// Liste des règles SEO à checker dans la page
-var seoRulesTags = [
-    {
-        name: "head",
-        seoRulesChildTags: [
+        // Liste des règles SEO à checker dans la page
+        this.seoRulesTags = [
             {
-                name: "title",
-                maxLength: 60
+                name: "head",
+                seoRulesChildTags: [
+                    {
+                        name: "title",
+                        maxLength: 60
+                    },
+                    {
+                        name: "meta",
+                        attributes: ["content"],
+                        maxLength: 160
+                    }
+                ]
             },
             {
-                name: "meta",
-                attributes: ["content"],
-                maxLength: 160
-            }
-        ]
-    },
-    {
-        name: "body",
-        seoRulesChildTags: [
+                name: "body",
+                seoRulesChildTags: [
+                    {
+                        name: "header",
+                    },
+                    {
+                        name: "main",
+                    },
+                    {
+                        name: "footer",
+                    },
+                    {
+                        name: "a",
+                        attributes: ["href", "title"]
+                    },
+                    {
+                        name: "img",
+                        attributes: ["src", "alt"]
+                    },
+                ]
+            },
             {
                 name: "header",
+                seoRulesChildTags: [
+                    {
+                        name: "h1",
+                        maxLength: 60
+                    },
+                    {
+                        name: "nav"
+                    },
+                ]
             },
             {
-                name: "main",
+                name: "section",
+                seoRulesChildTags: [
+                    {
+                        name: "h2",
+                        maxLength: 60
+                    },
+                ]
             },
-            {
-                name: "footer",
-            },
-            {
-                name: "a",
-                attributes: ["href", "title"]
-            },
-            {
-                name: "img",
-                attributes: ["src", "alt"]
-            },
-        ]
-    },
-    {
-        name: "header",
-        seoRulesChildTags: [
-            {
-                name: "h1",
-                maxLength: 60
-            },
-            {
-                name: "nav"
-            },
-        ]
-    },
-    {
-        name: "section",
-        seoRulesChildTags: [
-            {
-                name: "h2",
-                maxLength: 60
-            },
-        ]
-    },
-];
+        ];
 
-var tagsCount = 0;
-var tagsErrors = 0;
-var tagsSuccess = 0;
-var attributesErrors = 0;
-var attributesSuccess = 0;
+        this.errors = [];
 
-// Pour chaque règle SEO
-seoRulesTags.forEach(seoRuleTag => {
-    // On récupère le nom de la balise SEO
-    var tag = document.getElementsByTagName(seoRuleTag.name);
+        this.init();
+    }
 
-    // On créé une li pour chaque balise SEO
-    var li = document.createElement('li');
-    // On affiche le nom de la balise SEO
-    li.innerHTML = "<h3>" + seoRuleTag.name + " (" + tag.length + ")</h3>";
+    /**
+     * Initilisation
+     */
+    init() {
+        // Création du panneau
+        this.createPanel();
 
-    // On répète la boucle en fonction du nombre de balise SEO
-    for (var i = 0; i < tag.length; i++) {
+        // Création du bouton d'ouverture du panneau
+        this.createPanelButton();
 
-        // On récupère l'ul de la liste des balises SEO
-        var ul = document.getElementById('seo-checker-tags-list');
-        // On place
-        ul.appendChild(li);
+        if (this.options.panel.displayTagsListReport) {
+            // Création du rapport SEO
+            this.createSeoReport();
+        }
 
-        var childUl = document.createElement('ul');
-        li.appendChild(childUl);
+        if (this.options.panel.displayChartsReport) {
+            // Création du rapport SEO en camembert
+            this.createChartsSeoReport();
+        }
 
-        // Pour chaque balise enfant
-        seoRuleTag.seoRulesChildTags.forEach(seoRulesChildTag => {
+        this.panelDisplay();
 
-            // On récupère la balise enfant dans le DOM
-            var childTag = tag[i].getElementsByTagName(seoRulesChildTag.name);
+        this.seoCheckerButton.addEventListener('click', () => this.panelDisplay(), false);
+    }
 
-            // Texte de la balise enfant
-            var childTagText = "";
+    /**
+     * Création du panneau
+     */
+    createPanel() {
+        // Création du la div "#html5-checker"
+        this.seoCheckerPanel = document.createElement('div');
+        this.seoCheckerPanel.setAttribute('id', 'seo-checker-panel');
+        this.seoCheckerPanel.setAttribute('class', 'p-fixed d-flex flex-direction-column');
 
-            var chilLi = document.createElement('li');
-            chilLi.innerHTML = '<div class="' + ((childTag.length > 0) ? 'success' : 'error') + '">'
-                + ((childTag.length > 0) ? '✔' : '☓') + ' Balise ' +
-                '<strong>' + seoRulesChildTag.name + '</strong>' +
-                '(' + childTag.length + ')</div>';
+        this.seoCheckerPanel.innerHTML = "<h2 class='m-0'>SEO Checker</h2>" +
+            "<ul class='d-flex mb-2'>" +
+            "<li class='col-4'><p class='m-0'><span class='tags-errors error'></span></p><canvas id='tags'></canvas></li>" +
+            "<li class='col-4'><p class='m-0'><span class='length-errors error'></span></p><canvas id='length'></canvas></li>" +
+            "<li class='col-4'><p class='m-0'><span class='attributes-errors error'></span></p><canvas id='attributs'></canvas></li>" +
+            "</ul>" +
+            "<ul id='seo-checker-tags-list'></ul>";
 
-            // Si la balise enfant n'existe pas dans le DOM
-            if (childTag.length <= 0) {
+        document.body.prepend(this.seoCheckerPanel);
+    }
 
-                // On incrémente le nombre de balise manquante
-                tagsErrors++;
-            }
-            else {
-                tagsSuccess++;
-            }
+    /**
+     * Création du bouton d'ouveture/fermeture du panneau
+     */
+    createPanelButton() {
+        // Création du bouton "#html5-checker-button"
+        this.seoCheckerButton = document.createElement('button');
+        this.seoCheckerButton.setAttribute('id', 'seo-checker-button');
+        this.seoCheckerButton.setAttribute('class', 'p-fixed m-1 p-1 d-flex align-items-center justify-content-center');
+        this.seoCheckerButton.setAttribute('title', 'SEO Checker');
 
-            // On répète la boucle en fonction du nombre de balise enfant
-            for (var j = 0; j < childTag.length; j++) {
+        this.seoCheckerButton.innerHTML = "<div><span class='p-fixed tags-errors p-1 align-items-center justify-content-center bg-error'></span></div>" +
+            "&nbsp;<img src='images/seo.png' alt='Seo Checker'>&nbsp;";
 
-                if (seoRulesChildTag.name == 'meta') {
+        document.body.prepend(this.seoCheckerButton);
+    }
 
-                    if (childTag[j].getAttribute('content') !== null) {
+    /**
+     * Création du rapport SEO
+     */
+    createSeoReport() {
 
-                        childTagText = childTag[j].getAttribute('content');
+        var tag,
+            li,
+            ul,
+            childUl,
+            childLi,
+            childTag,
+            childTagText,
+            content;
+
+        // Pour chaque règle SEO
+        this.seoRulesTags.forEach(seoRuleTag => {
+            // On récupère le nom de la balise SEO
+            tag = document.getElementsByTagName(seoRuleTag.name);
+
+            // On créé une li pour chaque balise SEO
+            li = document.createElement('li');
+            // On affiche le nom de la balise SEO
+            li.innerHTML = "<h3 class='mb-1'>" + seoRuleTag.name + " (" + tag.length + ")</h3>";
+
+            // On répète la boucle en fonction du nombre de balise SEO
+            for (var i = 0; i < tag.length; i++) {
+
+                // On récupère l'ul de la liste des balises SEO
+                ul = document.getElementById('seo-checker-tags-list');
+                // On place
+                ul.appendChild(li);
+
+                childUl = document.createElement('ul');
+                li.appendChild(childUl);
+
+                // Pour chaque balise enfant
+                seoRuleTag.seoRulesChildTags.forEach(seoRulesChildTag => {
+
+                    // On récupère la balise enfant dans le DOM
+                    childTag = tag[i].getElementsByTagName(seoRulesChildTag.name);
+
+                    // Texte de la balise enfant
+                    childTagText = "";
+
+                    childLi = document.createElement('li');
+                    childLi.innerHTML = '<div class="' + ((childTag.length > 0) ? 'success' : 'error') + '">'
+                        + ((childTag.length > 0) ? '✔' : '☓') + ' Balise ' +
+                        '<strong>' + seoRulesChildTag.name + '</strong>' +
+                        ' (' + childTag.length + ')</div>';
+
+                    // Si la balise enfant n'existe pas dans le DOM
+                    if (childTag.length <= 0) {
+
+                        // On incrémente le nombre de balise manquante
+                        this.tagsErrors++;
                     }
-                }
-                else {
-
-                    if (typeof childTag[j].innerText !== 'undefined') {
-
-                        childTagText = childTag[j].innerText;
+                    else {
+                        this.tagsSuccess++;
                     }
-                }
 
-                var content = (childTagText.length > 0) ? '<div class="ml-2"><strong>- Texte:</strong> ' + limit(childTagText, 20) + '... </div>' : '';
+                    // On répète la boucle en fonction du nombre de balise enfant
+                    for (var j = 0; j < childTag.length; j++) {
 
-                if (seoRulesChildTag.maxLength) {
+                        if (seoRulesChildTag.name == 'meta') {
 
-                    if (childTag[j].getAttribute('charset') == null) {
-                        content += '<div class="' + ((childTagText.length > 0 && childTagText.length <= seoRulesChildTag.maxLength) ? 'ml-2 success' : 'ml-2 error') + '">- Longueur: ' + childTagText.length + '/' + seoRulesChildTag.maxLength + '</div>';
-                    }
-                }
+                            if (childTag[j].getAttribute('content') !== null) {
 
-                // Si il y a des attributs à checker pour cette balise
-                if (seoRulesChildTag.attributes) {
-
-                    // Pour chaque attribut à checker pour cette balise
-                    seoRulesChildTag.attributes.forEach(attribute => {
-
-                        if (childTag[j].getAttribute('charset') == null) {
-
-                            content += '<div class="ml-2 ' + (childTag[j].getAttribute(attribute) ? 'success' : 'error') + '">- ' + ((childTag[j].getAttribute(attribute) ? '✔' : '☓')) + ' <strong>' + attribute + ' ' + (childTag[j].getAttribute(attribute) ? ': ' + childTag[j].getAttribute(attribute) : '(manquant)') + '</strong></div>';
-                        }
-
-                        // Si l'attribut n'existe pas pour cette balise dans le DOM
-                        if (childTag[j].getAttribute(attribute) == null && childTag[j].getAttribute('charset') == null) {
-
-                            // On incrémente le nombre d'attribut manquant
-                            attributesErrors++;
+                                childTagText = childTag[j].getAttribute('content');
+                            }
                         }
                         else {
-                            attributesSuccess++;
+
+                            if (typeof childTag[j].innerText !== 'undefined') {
+
+                                childTagText = childTag[j].innerText;
+                            }
                         }
-                    });
-                }
 
-                chilLi.innerHTML += content;
+                        content = (childTagText.length > 0) ? '<ul class="ml-2 mt-1 mb-1 pb-1 border-bottom"><li><div><strong>- Texte:</strong> ' + this.limit(childTagText, 20) + '... </div></li>' : '<ul class="ml-2 mt-1 mb-1 pb-1 border-bottom">';
+
+                        if (seoRulesChildTag.maxLength) {
+
+                            if (childTag[j].getAttribute('charset') == null) {
+                                content += '<li class="' + ((childTagText.length > 0 && childTagText.length <= seoRulesChildTag.maxLength) ? 'success' : ' error') + '">- Longueur: ' + childTagText.length + '/' + seoRulesChildTag.maxLength + '</li>';
+                            }
+                        }
+
+                        if (childTagText.length > 0 && childTagText.length > seoRulesChildTag.maxLength) {
+
+                            this.lengthErrors++;
+                        }
+                        else {
+
+                            this.lengthSuccess++;
+                        }
+
+                        // Si il y a des attributs à checker pour cette balise
+                        if (seoRulesChildTag.attributes) {
+
+                            // Pour chaque attribut à checker pour cette balise
+                            seoRulesChildTag.attributes.forEach(attribute => {
+
+                                if (childTag[j].getAttribute('charset') == null) {
+
+                                    content += '<li class="' + (childTag[j].getAttribute(attribute) ? 'success' : 'error') + '">- ' + ((childTag[j].getAttribute(attribute) ? '✔' : '☓')) + ' <strong>' + attribute + ' ' + (childTag[j].getAttribute(attribute) ? ': ' + childTag[j].getAttribute(attribute) : '(manquant)') + '</strong></li>';
+                                }
+
+                                // Si l'attribut n'existe pas pour cette balise dans le DOM
+                                if (childTag[j].getAttribute(attribute) == null && childTag[j].getAttribute('charset') == null) {
+
+                                    // On incrémente le nombre d'attribut manquant
+                                    this.attributesErrors++;
+                                }
+                                else {
+                                    this.attributesSuccess++;
+                                }
+                            });
+                        }
+
+                        content += "</ul>";
+
+                        childLi.innerHTML += content;
+                    }
+
+                    childUl.appendChild(childLi);
+                });
             }
+        });
 
-            childUl.appendChild(chilLi);
+        this.displayTagsErrors();
+
+        this.displayLengthErrors();
+
+        this.displayAttributesErrors();
+    }
+
+    displayTagsErrors() {
+
+        var tagsErrorsSpan = document.getElementsByClassName('tags-errors');
+
+        if ((this.tagsErrors + this.attributesErrors + this.lengthErrors) > 0) {
+            tagsErrorsSpan[0].setAttribute('style', 'display: flex;');
+        }
+
+        tagsErrorsSpan[0].innerText = ((this.tagsErrors + this.attributesErrors + this.lengthErrors) > 0) ? (this.tagsErrors + this.attributesErrors + this.lengthErrors) : "";
+        tagsErrorsSpan[1].innerText = "balises manquantes (" + this.tagsErrors + ")";
+    }
+
+    displayLengthErrors() {
+
+        var lengthErrorsSpan = document.getElementsByClassName('length-errors');
+
+        lengthErrorsSpan[0].innerText = "problèmes de longueur (" + this.lengthErrors + ")";
+    }
+
+    displayAttributesErrors() {
+
+        var attributesErrorsSpan = document.getElementsByClassName('attributes-errors');
+
+        attributesErrorsSpan[0].innerText = "attributs manquants (" + this.attributesErrors + ")";
+    }
+
+    /**
+     * Création des rapport SEO en graphiques
+     */
+    createChartsSeoReport() {
+
+        this.errors = [
+            {
+                id: "tags",
+                labels: [
+                    'Balises manquantes',
+                    'Balises existantes',
+                ],
+                error: this.tagsErrors,
+                success: this.tagsSuccess
+            },
+            {
+                id: "length",
+                labels: [
+                    'Balises manquantes',
+                    'Balises existantes',
+                ],
+                error: this.lengthErrors,
+                success: this.lengthSuccess
+            },
+            {
+                id: "attributs",
+                labels: [
+                    'Attributs manquants',
+                    'Attributs existants',
+                ],
+                error: this.attributesErrors,
+                success: this.attributesSuccess
+            }
+        ];
+
+        this.errors.forEach(error => {
+
+            new Chart(document.getElementById(error.id), {
+                type: 'pie',
+                data: {
+                    labels: error.labels,
+                    datasets: [{
+                        label: ' Total',
+                        data: [error.error, error.success],
+                        backgroundColor: [
+                            'red',
+                            'green',
+                        ],
+                        hoverOffset: 4
+                    }]
+                },
+                options: {
+                    plugins: {
+                        legend: {
+                            align: 'start',
+                        }
+                    }
+                }
+            });
         });
     }
 
-    // On compte le nombre d'élément pour chaque balise
-    tagsCount = tagsCount + tag.length;
-
-    var tagsErrorsSpan = document.getElementsByClassName('tags-errors');
-
-    if (tagsErrors > 0) {
-        tagsErrorsSpan[0].setAttribute('style', 'display: flex;');
+    limit(string = '', limit = 0) {
+        return string.substring(0, limit)
     }
 
-    tagsErrorsSpan[0].innerText = (tagsErrors > 0) ? tagsErrors : "";
-    tagsErrorsSpan[1].innerText = (tagsErrors > 0) ? tagsErrors + " balise(s) manquante(s)" : "";
+    percentage(num, num2) {
+        return num / num2 * 100;
+    }
 
-    var attributesErrorsSpan = document.getElementsByClassName('attributes-errors');
+    /**
+     * Affichage du panneau
+     */
+    panelDisplay() {
 
-    attributesErrorsSpan[0].innerText = (attributesErrors > 0) ? attributesErrors + " attribut(s) manquant(s)" : "";
-});
+        if (this.panelIsOpen == true) {
+            // On affiche le panneau de la liste des balises
+            this.seoCheckerPanel.classList.add("open");
 
-// console.log(tagsErrors, tagsSuccess, (tagsErrors + tagsSuccess));
-// console.log(attributesErrors, attributesSuccess, (attributesErrors + attributesSuccess));
+            this.showPanel();
+        }
+        else {
+            // On cache le panneau de la liste des balises
+            this.seoCheckerPanel.classList.remove("open");
 
-// console.log(percentage(tagsErrors, (tagsErrors + tagsSuccess)) + '%');
+            this.hidePanel();
+        }
 
-new Chart(tagsChart, {
-    type: 'pie',
-    data: {
-        labels: [
-            'Balises manquantes',
-            'Balises existantes',
-        ],
-        datasets: [{
-            label: 'My First Dataset',
-            data: [tagsErrors, tagsSuccess],
-            backgroundColor: [
-                'red',
-                'green',
-            ],
-            hoverOffset: 4
-        }]
-    },
-});
+        this.panelIsOpen = (this.panelIsOpen) ? false : true;
+    }
 
-new Chart(attributsChart, {
-    type: 'pie',
-    data: {
-        labels: [
-            'Attributs manquants',
-            'Attributs trouvés',
-        ],
-        datasets: [{
-            label: 'My First Dataset',
-            data: [attributesErrors, attributesSuccess],
-            backgroundColor: [
-                'red',
-                'green',
-            ],
-            hoverOffset: 4
-        }]
-    },
-});
+    showPanel() {
 
-var panelIsOpen = false;
-
-// Au clic du bouton "#html5-checker-button"
-seoCheckerButton.addEventListener('click', function () {
-
-    if (panelIsOpen == false) {
-        // On affiche le panneau de la liste des balises
-        seoChecker.setAttribute('class', 'p-fixed d-flex flex-direction-column open');
-
-        panelIsOpen = true;
-
-        seoCheckerButton.innerHTML = "<div><span class='p-fixed tags-errors p-1 align-items-center justify-content-center bg-error'></span></div>" +
+        this.seoCheckerButton.innerHTML = "<div><span class='p-fixed tags-errors p-1 align-items-center justify-content-center bg-error'></span></div>" +
             "&nbsp;<i class='fa fa-close'></i>&nbsp;";
     }
-    else {
 
-        // On cache le panneau de la liste des balises
-        seoChecker.setAttribute('class', 'p-fixed d-flex flex-direction-column');
+    hidePanel() {
 
-        panelIsOpen = false;
-
-        seoCheckerButton.innerHTML = "<div><span class='p-fixed tags-errors p-1 align-items-center justify-content-center bg-error'></span></div>" +
+        this.seoCheckerButton.innerHTML = "<div><span class='p-fixed tags-errors p-1 align-items-center justify-content-center bg-error'></span></div>" +
             "&nbsp;<img src='images/seo.png' alt='Seo Checker'>&nbsp;";
     }
-});
-
-function limit(string = '', limit = 0) {
-    return string.substring(0, limit)
-}
-
-function percentage(num, num2) {
-    return num / num2 * 100;
-}
+};

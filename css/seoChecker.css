@@ -6,6 +6,10 @@
   position: fixed;
 }
 
+img {
+  max-width: 100%;
+}
+
 .container {
   max-width: 1200px;
   margin: 0 auto;
@@ -16,7 +20,7 @@
 }
 
 .col-4 {
-  width: 40%;
+  width: 33%;
 }
 
 .col-8 {
@@ -43,6 +47,14 @@ figure {
   padding: 30px;
 }
 
+.pl-2 {
+  padding-left: 30px;
+}
+
+.pb-1 {
+  padding-bottom: 15px;
+}
+
 .m-0 {
   margin: 0;
 }
@@ -57,6 +69,10 @@ figure {
 
 .ml-2 {
   margin-left: 30px;
+}
+
+.mt-1 {
+  margin-top: 15px;
 }
 
 .mb-1 {
@@ -100,6 +116,10 @@ figure {
   justify-content: center;
 }
 
+.justify-content-between {
+  justify-content: space-between;
+}
+
 .white {
   color: #fff;
 }
@@ -130,6 +150,10 @@ figure {
 
 .error {
   color: red;
+}
+
+.border-bottom {
+  border-bottom: 1px solid #000;
 }
 
 details {
@@ -173,8 +197,8 @@ details:hover {
   bottom: 0;
   z-index: 1000;
   padding: 15px;
-  width: 500px;
-  margin-right: -530px;
+  width: 600px;
+  margin-right: -630px;
   background-color: #fff;
   transition: all 0.5s;
   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
@@ -184,10 +208,13 @@ details:hover {
   color: #000 !important;
 }
 #seo-checker-panel h3 {
+  color: #000 !important;
+}
+#seo-checker-panel p {
   margin: 0;
 }
 #seo-checker-panel.open {
-  width: 500px;
+  width: 600px;
   margin: 0;
 }
 #seo-checker-panel #seo-checker-tags-list {
@@ -195,9 +222,6 @@ details:hover {
   height: 100%;
   padding: 15px;
   box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px inset, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px inset;
-}
-#seo-checker-panel #seo-checker-tags-list h3 {
-  margin: 0;
 }
 
 /*# sourceMappingURL=seoChecker.css.map */
