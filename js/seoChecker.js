@@ -6,6 +6,7 @@ seoChecker.setAttribute('class', 'p-fixed d-flex flex-direction-column');
 seoChecker.innerHTML = "<h2 class='m-0'>SEO Checker</h2>" +
     "<p class='m-0'><span class='tags-errors error'></span></p>" +
     "<p class='m-0'><span class='attributes-errors error'></span></p>" +
+    "<ul class='d-flex mb-2'><li class='col-6'><canvas id='tags'></canvas></li><li class='col-6'><canvas id='attributs'></canvas></li></ul>" +
     "<ul id='seo-checker-tags-list'></ul>";
 
 document.body.prepend(seoChecker);
@@ -21,6 +22,9 @@ seoCheckerButton.innerHTML = "<div><span class='p-fixed tags-errors p-1 align-it
     "&nbsp;<img src='images/seo.png' alt='Seo Checker'>&nbsp;";
 
 document.body.prepend(seoCheckerButton);
+
+const tagsChart = document.getElementById('tags');
+const attributsChart = document.getElementById('attributs');
 
 // Liste des règles SEO à checker dans la page
 var seoRulesTags = [
@@ -85,7 +89,9 @@ var seoRulesTags = [
 
 var tagsCount = 0;
 var tagsErrors = 0;
+var tagsSuccess = 0;
 var attributesErrors = 0;
+var attributesSuccess = 0;
 
 // Pour chaque règle SEO
 seoRulesTags.forEach(seoRuleTag => {
@@ -128,6 +134,9 @@ seoRulesTags.forEach(seoRuleTag => {
 
                 // On incrémente le nombre de balise manquante
                 tagsErrors++;
+            }
+            else {
+                tagsSuccess++;
             }
 
             // On répète la boucle en fonction du nombre de balise enfant
@@ -174,6 +183,9 @@ seoRulesTags.forEach(seoRuleTag => {
                             // On incrémente le nombre d'attribut manquant
                             attributesErrors++;
                         }
+                        else {
+                            attributesSuccess++;
+                        }
                     });
                 }
 
@@ -199,6 +211,49 @@ seoRulesTags.forEach(seoRuleTag => {
     var attributesErrorsSpan = document.getElementsByClassName('attributes-errors');
 
     attributesErrorsSpan[0].innerText = (attributesErrors > 0) ? attributesErrors + " attribut(s) manquant(s)" : "";
+});
+
+// console.log(tagsErrors, tagsSuccess, (tagsErrors + tagsSuccess));
+// console.log(attributesErrors, attributesSuccess, (attributesErrors + attributesSuccess));
+
+// console.log(percentage(tagsErrors, (tagsErrors + tagsSuccess)) + '%');
+
+new Chart(tagsChart, {
+    type: 'pie',
+    data: {
+        labels: [
+            'Balises manquantes',
+            'Balises existantes',
+        ],
+        datasets: [{
+            label: 'My First Dataset',
+            data: [tagsErrors, tagsSuccess],
+            backgroundColor: [
+                'red',
+                'green',
+            ],
+            hoverOffset: 4
+        }]
+    },
+});
+
+new Chart(attributsChart, {
+    type: 'pie',
+    data: {
+        labels: [
+            'Attributs manquants',
+            'Attributs trouvés',
+        ],
+        datasets: [{
+            label: 'My First Dataset',
+            data: [attributesErrors, attributesSuccess],
+            backgroundColor: [
+                'red',
+                'green',
+            ],
+            hoverOffset: 4
+        }]
+    },
 });
 
 var panelIsOpen = false;
@@ -229,4 +284,8 @@ seoCheckerButton.addEventListener('click', function () {
 
 function limit(string = '', limit = 0) {
     return string.substring(0, limit)
+}
+
+function percentage(num, num2) {
+    return num / num2 * 100;
 }
