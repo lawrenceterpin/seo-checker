@@ -2,9 +2,8 @@
 
 ## Présentation
 
-Auteur: Lawrence Terpin
-Langages: HTML, CSS, Javascript
-
+### Auteur: Lawrence Terpin
+#### Langages: HTML, CSS, Javascript
 Site de démo du plugin Seo Checker avec Node.js
 
 ## Prérequis
