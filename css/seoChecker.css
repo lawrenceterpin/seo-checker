@@ -1,0 +1,107 @@
+.white {
+  color: #fff;
+}
+
+.bg-white {
+  background-color: #fff;
+}
+
+.purple {
+  color: #9C27B0;
+}
+
+.bg-purple {
+  background-color: #9C27B0;
+}
+
+.success {
+  color: green;
+}
+
+.error {
+  color: red;
+}
+
+details {
+  cursor: pointer;
+}
+details:hover {
+  font-weight: bold;
+}
+
+#seo-checker-button {
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  z-index: 100;
+  margin: 15px;
+  padding: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  border: none;
+  background: #fff;
+  border-radius: 25px;
+  text-decoration: none;
+  transition: all 0.5s;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  border-radius: 50%;
+  aspect-ratio: 1/1;
+}
+#seo-checker-button > div {
+  position: relative;
+}
+#seo-checker-button > div .tags-errors {
+  position: fixed;
+  display: none;
+  bottom: 60px;
+  right: 0;
+  z-index: 101;
+  padding: 15px;
+  align-items: center;
+  justify-content: center;
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  background-color: red;
+  color: #fff;
+}
+
+#seo-checker-panel {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+  padding: 15px;
+  width: 500px;
+  margin-right: -530px;
+  background-color: #fff;
+  transition: all 0.5s;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+#seo-checker-panel h2 {
+  margin: 0;
+  color: #000 !important;
+}
+#seo-checker-panel h3 {
+  margin: 0;
+}
+#seo-checker-panel.open {
+  width: 500px;
+  margin: 0;
+}
+#seo-checker-panel #seo-checker-tags-list {
+  overflow-y: scroll;
+  height: 100%;
+  padding: 15px;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px inset, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px inset;
+}
+#seo-checker-panel #seo-checker-tags-list h3 {
+  margin: 0;
+}
+
+/*# sourceMappingURL=seoChecker.css.map */

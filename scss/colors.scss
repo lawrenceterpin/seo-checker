@@ -1,0 +1,27 @@
+$white: #fff;
+$black: #000;
+$purple: #9C27B0;
+
+.white {
+    color: $white;
+}
+
+.bg-white {
+    background-color: $white;
+}
+
+.purple {
+    color: $purple;
+}
+
+.bg-purple {
+    background-color: $purple
+}
+
+.success {
+    color: green
+}
+
+.error {
+    color: red
+}

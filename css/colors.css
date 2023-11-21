@@ -1,0 +1,25 @@
+.white {
+  color: #fff;
+}
+
+.bg-white {
+  background-color: #fff;
+}
+
+.purple {
+  color: #9C27B0;
+}
+
+.bg-purple {
+  background-color: #9C27B0;
+}
+
+.success {
+  color: green;
+}
+
+.error {
+  color: red;
+}
+
+/*# sourceMappingURL=colors.css.map */
