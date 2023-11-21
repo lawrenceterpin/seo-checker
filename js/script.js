@@ -1,3 +1,4 @@
+// Options Seo Checker
 var options = {
     panel: {
         open: false,
@@ -6,4 +7,5 @@ var options = {
     }
 }
 
+// Initialisation de Seo Checker
 seoChecker = new SeoChecker(options);

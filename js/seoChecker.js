@@ -12,6 +12,7 @@ class SeoChecker {
     constructor(options) {
 
         this.options = options;
+        
         this.tagsErrors = 0;
         this.tagsSuccess = 0;
         this.lengthErrors = 0;
@@ -153,7 +154,7 @@ class SeoChecker {
      */
     createSeoReport() {
 
-        var tag,
+        let tag,
             li,
             ul,
             childUl,
@@ -188,7 +189,6 @@ class SeoChecker {
 
                     // On récupère la balise enfant dans le DOM
                     childTag = tag[i].getElementsByTagName(seoRulesChildTag.name);
-
                     // Texte de la balise enfant
                     childTagText = "";
 
@@ -200,7 +200,6 @@ class SeoChecker {
 
                     // Si la balise enfant n'existe pas dans le DOM
                     if (childTag.length <= 0) {
-
                         // On incrémente le nombre de balise manquante
                         this.tagsErrors++;
                     }
