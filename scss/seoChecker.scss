@@ -1,3 +1,7 @@
+@import "positions.scss";
+@import "sizing.scss";
+@import "spacing.scss";
+@import "flexbox.scss";
 @import "colors.scss";
 
 $seoCheckerPanelSize: 500px;
@@ -11,55 +15,40 @@ details {
 }
 
 #seo-checker-button {
-    position: fixed;
     bottom: 0;
     right: 0;
-    z-index: 100;
-    margin: 15px;
-    padding: 15px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    z-index: 1001;
     cursor: pointer;
     border: none;
     background: $white;
     border-radius: 25px;
+    aspect-ratio: 1/1;
     text-decoration: none;
     transition: all 0.5s;
     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
     border-radius: 50%;
-    aspect-ratio: 1/1;
 
     >div {
         position: relative;
 
         .tags-errors {
-            position: fixed;
             display: none;
             bottom: 60px;
             right: 0;
-            z-index: 101;
-            padding: 15px;
-            align-items: center;
-            justify-content: center;
+            z-index: 1002;
             width: 15px;
             height: 15px;
             border-radius: 50%;
-            // aspect-ratio: 1/1;
-            background-color: red;
             color: #fff;
         }
     }
 }
 
 #seo-checker-panel {
-    position: fixed;
     top: 0;
     right: 0;
     bottom: 0;
-    z-index: 100;
-    display: flex;
-    flex-direction: column;
+    z-index: 1000;
     padding: 15px;
     width: $seoCheckerPanelSize;
     margin-right: -530px;

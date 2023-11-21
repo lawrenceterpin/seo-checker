@@ -1,6 +1,8 @@
 // Création du la div "#html5-checker"
 var seoChecker = document.createElement('div');
 seoChecker.setAttribute('id', 'seo-checker-panel');
+seoChecker.setAttribute('class', 'p-fixed d-flex flex-direction-column');
+
 seoChecker.innerHTML = "<h2 class='m-0'>SEO Checker</h2>" +
     "<p class='m-0'><span class='tags-errors error'></span></p>" +
     "<p class='m-0'><span class='attributes-errors error'></span></p>" +
@@ -11,9 +13,11 @@ document.body.prepend(seoChecker);
 // Création du bouton "#html5-checker-button"
 var seoCheckerButton = document.createElement('button');
 seoCheckerButton.setAttribute('id', 'seo-checker-button');
+seoCheckerButton.setAttribute('class', 'p-fixed m-1 p-1 d-flex align-items-center justify-content-center');
+
 seoCheckerButton.setAttribute('title', 'SEO Checker');
 
-seoCheckerButton.innerHTML = "<div><span class='tags-errors error'></span></div>" +
+seoCheckerButton.innerHTML = "<div><span class='p-fixed tags-errors p-1 align-items-center justify-content-center bg-error'></span></div>" +
     "&nbsp;<img src='images/seo.png' alt='Seo Checker'>&nbsp;";
 
 document.body.prepend(seoCheckerButton);
@@ -144,22 +148,30 @@ seoRulesTags.forEach(seoRuleTag => {
                     }
                 }
 
-                var content = '<div class="ml-2"><strong>- Contenu:</strong> ' + limit(childTagText, 20) + '... </div>';
+                var content = (childTagText.length > 0) ? '<div class="ml-2"><strong>- Texte:</strong> ' + limit(childTagText, 20) + '... </div>' : '';
 
                 if (seoRulesChildTag.maxLength) {
 
-                    content += '<div class="' + ((childTagText.length > 0 && childTagText.length <= seoRulesChildTag.maxLength) ? 'ml-2 success' : 'ml-2 error') + '">- Longueur: ' + childTagText.length + '/' + seoRulesChildTag.maxLength + '</div>';
+                    if (childTag[j].getAttribute('charset') == null) {
+                        content += '<div class="' + ((childTagText.length > 0 && childTagText.length <= seoRulesChildTag.maxLength) ? 'ml-2 success' : 'ml-2 error') + '">- Longueur: ' + childTagText.length + '/' + seoRulesChildTag.maxLength + '</div>';
+                    }
                 }
 
-                // Si 
+                // Si il y a des attributs à checker pour cette balise
                 if (seoRulesChildTag.attributes) {
 
+                    // Pour chaque attribut à checker pour cette balise
                     seoRulesChildTag.attributes.forEach(attribute => {
 
-                        content += '<div class="ml-2 ' + (childTag[j].getAttribute(attribute) ? 'success' : 'error') + '">- ' + ((childTag[j].getAttribute(attribute) ? '✔' : '☓')) + ' <strong>' + attribute + ' ' + (childTag[j].getAttribute(attribute) ? ': ' + childTag[j].getAttribute(attribute) : '(manquant)') + '</strong></div>';
+                        if (childTag[j].getAttribute('charset') == null) {
 
+                            content += '<div class="ml-2 ' + (childTag[j].getAttribute(attribute) ? 'success' : 'error') + '">- ' + ((childTag[j].getAttribute(attribute) ? '✔' : '☓')) + ' <strong>' + attribute + ' ' + (childTag[j].getAttribute(attribute) ? ': ' + childTag[j].getAttribute(attribute) : '(manquant)') + '</strong></div>';
+                        }
+
+                        // Si l'attribut n'existe pas pour cette balise dans le DOM
                         if (childTag[j].getAttribute(attribute) == null && childTag[j].getAttribute('charset') == null) {
 
+                            // On incrémente le nombre d'attribut manquant
                             attributesErrors++;
                         }
                     });
@@ -189,11 +201,30 @@ seoRulesTags.forEach(seoRuleTag => {
     attributesErrorsSpan[0].innerText = (attributesErrors > 0) ? attributesErrors + " attribut(s) manquant(s)" : "";
 });
 
+var panelIsOpen = false;
+
 // Au clic du bouton "#html5-checker-button"
 seoCheckerButton.addEventListener('click', function () {
 
-    // On affiche le panneau de la liste des balises
-    seoChecker.setAttribute('class', 'open');
+    if (panelIsOpen == false) {
+        // On affiche le panneau de la liste des balises
+        seoChecker.setAttribute('class', 'p-fixed d-flex flex-direction-column open');
+
+        panelIsOpen = true;
+
+        seoCheckerButton.innerHTML = "<div><span class='p-fixed tags-errors p-1 align-items-center justify-content-center bg-error'></span></div>" +
+            "&nbsp;<i class='fa fa-close'></i>&nbsp;";
+    }
+    else {
+
+        // On cache le panneau de la liste des balises
+        seoChecker.setAttribute('class', 'p-fixed d-flex flex-direction-column');
+
+        panelIsOpen = false;
+
+        seoCheckerButton.innerHTML = "<div><span class='p-fixed tags-errors p-1 align-items-center justify-content-center bg-error'></span></div>" +
+            "&nbsp;<img src='images/seo.png' alt='Seo Checker'>&nbsp;";
+    }
 });
 
 function limit(string = '', limit = 0) {

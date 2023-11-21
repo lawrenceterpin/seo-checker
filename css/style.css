@@ -109,8 +109,16 @@ figure {
   background-color: #9C27B0;
 }
 
+.bg-success {
+  background-color: green;
+}
+
 .success {
   color: green;
+}
+
+.bg-error {
+  background-color: red;
 }
 
 .error {

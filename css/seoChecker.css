@@ -1,3 +1,105 @@
+.p-relative {
+  position: relative;
+}
+
+.p-fixed {
+  position: fixed;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.w-100 {
+  width: 100%;
+}
+
+.col-4 {
+  width: 40%;
+}
+
+.col-8 {
+  width: 60%;
+}
+
+.col-6 {
+  width: 50%;
+}
+
+body,
+ul,
+li,
+figure {
+  margin: 0;
+  padding: 0;
+}
+
+.p-1 {
+  padding: 15px;
+}
+
+.p-2 {
+  padding: 30px;
+}
+
+.m-0 {
+  margin: 0;
+}
+
+.m-1 {
+  margin: 15px;
+}
+
+.ml-1 {
+  margin-left: 15px;
+}
+
+.ml-2 {
+  margin-left: 30px;
+}
+
+.mb-1 {
+  margin-bottom: 15px;
+}
+
+.mb-2 {
+  margin-bottom: 30px;
+}
+
+.d-flex {
+  display: flex;
+  flex: 0 0 auto;
+}
+
+.gap-1 {
+  gap: 15px;
+}
+
+.gap-2 {
+  gap: 30px;
+}
+
+.flex-direction-row {
+  flex-direction: row;
+}
+
+.flex-direction-column {
+  flex-direction: column;
+}
+
+.flex-direction-row-reverse {
+  flex-direction: row-reverse;
+}
+
+.align-items-center {
+  align-items: center;
+}
+
+.justify-content-center {
+  justify-content: center;
+}
+
 .white {
   color: #fff;
 }
@@ -14,8 +116,16 @@
   background-color: #9C27B0;
 }
 
+.bg-success {
+  background-color: green;
+}
+
 .success {
   color: green;
+}
+
+.bg-error {
+  background-color: red;
 }
 
 .error {
@@ -30,52 +140,38 @@ details:hover {
 }
 
 #seo-checker-button {
-  position: fixed;
   bottom: 0;
   right: 0;
-  z-index: 100;
-  margin: 15px;
-  padding: 15px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  z-index: 1001;
   cursor: pointer;
   border: none;
   background: #fff;
   border-radius: 25px;
+  aspect-ratio: 1/1;
   text-decoration: none;
   transition: all 0.5s;
   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
   border-radius: 50%;
-  aspect-ratio: 1/1;
 }
 #seo-checker-button > div {
   position: relative;
 }
 #seo-checker-button > div .tags-errors {
-  position: fixed;
   display: none;
   bottom: 60px;
   right: 0;
-  z-index: 101;
-  padding: 15px;
-  align-items: center;
-  justify-content: center;
+  z-index: 1002;
   width: 15px;
   height: 15px;
   border-radius: 50%;
-  background-color: red;
   color: #fff;
 }
 
 #seo-checker-panel {
-  position: fixed;
   top: 0;
   right: 0;
   bottom: 0;
-  z-index: 100;
-  display: flex;
-  flex-direction: column;
+  z-index: 1000;
   padding: 15px;
   width: 500px;
   margin-right: -530px;
