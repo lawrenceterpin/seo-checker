@@ -9,13 +9,16 @@ Site de démo du plugin Seo Checker avec Node.js
 
 ## Prérequis
 
-[GIT](https://git-scm.com/downloads)
+[GIT](https://git-scm.com/downloads)\
 [Node.Js](https://nodejs.org/en)
 
 ## Installation
 
+Installtion des package Node:
 ```
 npm i
-
-npm run start
+```
+Compilation du .scss en .css:
+```
+npm run sass
 ```
