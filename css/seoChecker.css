@@ -23,7 +23,7 @@ img {
   height: 100%;
 }
 
-.col-4 {
+.col-lg-4 {
   width: 33%;
 }
 
@@ -35,6 +35,11 @@ img {
   width: 50%;
 }
 
+@media (max-width: 480px) {
+  .col-12 {
+    width: 100%;
+  }
+}
 body,
 ul,
 li,
@@ -90,6 +95,10 @@ figure {
 .d-flex {
   display: flex;
   flex: 0 0 auto;
+}
+
+.wrap {
+  flex-wrap: wrap;
 }
 
 .gap-1 {
@@ -240,12 +249,21 @@ figure {
   border: 1px solid #000;
 }
 #seo-checker-panel #charts-seo-report {
+  overflow-y: scroll;
+  height: 100%;
   box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px inset, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px inset;
 }
 #seo-checker-panel #seo-checker-tags-list {
   overflow-y: scroll;
   height: 100%;
   box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px inset, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px inset;
+}
+
+@media (max-width: 480px) {
+  #seo-checker-panel.open {
+    width: auto;
+    left: 0;
+  }
 }
 
 /*# sourceMappingURL=seoChecker.css.map */

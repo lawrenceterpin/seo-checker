@@ -151,10 +151,10 @@ class SeoChecker {
             "</ul>" +
             "<div id='tabs-body' class='d-flex flex-direction-column h-100'>" +
             "<div class='tabsContent d-flex flex-direction-column tab-1 p-1 open'>" +
-            "<ul id='charts-seo-report' class='d-flex mb-2 p-1'>" +
-            "<li class='col-4'><p class='m-0'><span class='tags-errors error'></span></p><canvas id='tags'></canvas></li>" +
-            "<li class='col-4'><p class='m-0'><span class='length-errors error'></span></p><canvas id='length'></canvas></li>" +
-            "<li class='col-4'><p class='m-0'><span class='attributes-errors error'></span></p><canvas id='attributs'></canvas></li>" +
+            "<ul id='charts-seo-report' class='d-flex wrap mb-2 p-1'>" +
+            "<li class='col-12 col-lg-4'><p class='m-0'><span class='tags-errors error'></span></p><canvas id='tags'></canvas></li>" +
+            "<li class='col-12 col-lg-4'><p class='m-0'><span class='length-errors error'></span></p><canvas id='length'></canvas></li>" +
+            "<li class='col-12 col-lg-4'><p class='m-0'><span class='attributes-errors error'></span></p><canvas id='attributs'></canvas></li>" +
             "</ul>" +
             "</div>" +
             "<div class='tabsContent d-flex flex-direction-column tab-2 p-1'>" +
@@ -176,7 +176,7 @@ class SeoChecker {
         this.seoCheckerButton.setAttribute('title', 'SEO Checker');
 
         this.seoCheckerButton.innerHTML = "<div><span class='p-fixed tags-errors p-1 align-items-center justify-content-center bg-error'></span></div>" +
-            "&nbsp;<img src='images/seo.png' alt='Seo Checker'>&nbsp;";
+            "&nbsp;<img src='https://lawrenceterpin.github.io/seo-checker/images/seo.png' alt='Seo Checker'>&nbsp;";
 
         document.body.prepend(this.seoCheckerButton);
     }

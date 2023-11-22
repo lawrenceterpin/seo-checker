@@ -15,7 +15,7 @@ img {
   height: 100%;
 }
 
-.col-4 {
+.col-lg-4 {
   width: 33%;
 }
 
@@ -25,6 +25,12 @@ img {
 
 .col-6 {
   width: 50%;
+}
+
+@media (max-width: 480px) {
+  .col-12 {
+    width: 100%;
+  }
 }
 
 /*# sourceMappingURL=sizing.css.map */

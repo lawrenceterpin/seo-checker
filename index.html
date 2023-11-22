@@ -6,7 +6,7 @@
 <head>
     <meta charset="utf-8">
     <!-- Titre de la page -->
-    <title>SEO Checker Démo</title>
+    <title>SEO Checker</title>
     <!-- Description de la page -->
     <meta name=”author” content="Lawrence Terpin">
     <meta name="description" content="Un site de démonstration en HTML 5.">
@@ -33,18 +33,12 @@
 
 <body class="bg-white">
 
-    <header class="p-relative d-flex flex-direction-column align-items-center p-2 shadow">
-        <h1 class="m-0 mb-1 text-center">Site en HTML 5</h1>
+    <header class="p-relative d-flex align-items-center justify-content-between align-items-center p-2 shadow">
+        <h1 class="m-0 text-center">Seo Checker</h1>
         <nav>
             <ul class="d-flex gap-1">
                 <li>
-                    <a title="Qu'est ce que l'HTML ?">Qu'est ce que l'HTML ?</a>
-                </li>
-                <li>
-                    <a href="#css" title="Qu'est ce que la CSS ?">Qu'est ce que la CSS ?</a>
-                </li>
-                <li>
-                    <a href="#javascript" title="Qu'est ce que le Javascript ?">Qu'est ce que le Javascript ?</a>
+                    <a href="demo.html" title="Démo" class="btn bg-purple white">Démo</a>
                 </li>
             </ul>
         </nav>
@@ -52,63 +46,19 @@
     <main>
         <section id="présentation"
             class="d-flex flex-direction-column align-items-center justify-content-center p-2 bg-purple white">
-            <h2>Présentation</h2>
-            <p>Ce site est un site de démonstration des possibilités qu'offre le langage HTML,CSS et Javascript</p>
+            <h2>Testez le SEO de votre code HTML dans votre page web</h2>
         </section>
-        <section id="html" class="container p-2 mb-2 gap-2 d-flex align-items-center">
-            <article class="col-8">
-                <h2>Qu'est ce que <span class="purple">l'HTML</span> ?</h2>
-                <p>Le <strong>HyperText Markup Language</strong>, généralement abrégé <strong>HTML</strong> ou, dans sa
-                    dernière version, <strong>HTML5</strong>, est le
-                    <strong>langage de balisage conçu pour représenter les pages web</strong>.Ce langage permet d’écrire
-                    de l’hypertexte (d’où son nom), de <strong>structurer
-                        sémantiquement une page web</strong>, de <strong>mettre en forme du contenu</strong>
-                </p>
-                <br>
-                <a href="#" title="En savoir +" class="btn shadow">En savoir +</a>
-            </article>
-            <figure class="col-4">
-                <img src="images/html5.svg.png" alt="Image de paysage" class="w-100 d-flex" />
-            </figure>
-        </section>
-        <section id="css" class="mb-2 bg-purple white">
-            <div class="d-flex align-items-center gap-2 flex-direction-row-reverse container p-2">
-                <article class="col-8">
-                    <h2>Qu'est ce que <span class="white">la CSS</span> ?</h2>
-                    <p>Les <strong>feuilles de style en cascade</strong>, généralement appelées <strong>CSS</strong> de
-                        l'anglais <strong>Cascading
-                            Style Sheets</strong>,
-                        forment un langage informatique qui <strong>décrit la présentation des documents HTML et
-                            XML</strong>. <br>Les standards définissant CSS sont publiés par le World Wide Web
-                        Consortium
-                        (W3C).
-                        Introduit au milieu des années 1990, CSS devient couramment utilisé dans <strong>la conception
-                            de
-                            sites web et bien pris en charge par les navigateurs</strong> web dans les années 2000.</p>
-                    <br>
-                    <a href="#" title="En savoir +" class="btn shadow">En savoir +</a>
-                </article>
-                <figure class="col-4">
-                    <img src="images/css3.svg" alt="Image d'aurores" class="d-flex" />
-                </figure>
+        <section id="installation" class="p-1   ">
+            <div class="container p-1">
+                <h2 class="text-center">Installation</h2>
+                <h3>1. Inclure le fichier CSS</h3>
+                <pre
+                    class="code-html p-relative p-1"><code>&lt;link href=&quot;https://lawrenceterpin.github.io/seo-checker/css/seoChecker.css&quot; type=&quot;text/css&quot; rel=&quot;stylesheet&quot;&gt;</code></pre>
+
+                <h3>2. Inclure le fichier JS</h3>
+                <pre
+                    class="code-html p-relative p-1"><code>&lt;script src=&quot;https://lawrenceterpin.github.io/seo-checker/js/seoChecker.js&quot; type=&quot;text/javascript&quot;&gt;</code></pre>
             </div>
-        </section>
-        <section id="javascript" class="container p-2 mb-2 d-flex align-items-center gap-2">
-            <article class="col-8">
-                <h2>Qu'est ce que <span class="purple">Le Javascript</span> ?</h2>
-                <p><strong>JavaScript</strong> est un <strong>langage de programmation de scripts</strong>
-                    principalement <strong>employé dans
-                        les pages web
-                        interactives</strong> et à ce titre est une partie essentielle des applications web. Avec les
-                    langages HTML
-                    et CSS, JavaScript est au cœur des langages utilisés par les développeurs web.
-                </p>
-                <br>
-                <a href="#" title="En savoir +" class="btn shadow">En savoir +</a>
-            </article>
-            <figure class="col-4">
-                <img src="images/js.svg.png" alt="Image d'aurores" class="d-flex" />
-            </figure>
         </section>
     </main>
 
