@@ -1,4 +1,3 @@
-@charset "UTF-8";
 img {
   max-width: 100%;
 }
@@ -171,18 +170,6 @@ body {
   transition: all 0.5s;
 }
 
-/* Mode contrasté */
-body.contrast-mode {
-  background-color: #000;
-  color: #fff;
-}
-body.contrast-mode a {
-  color: #fff;
-}
-body.contrast-mode .btn {
-  background: #9C27B0;
-}
-
 a {
   text-decoration: none;
   color: #9C27B0;
@@ -220,11 +207,6 @@ li {
 .round {
   border-radius: 50%;
   aspect-ratio: 1/1;
-}
-
-#contrast-button {
-  top: 0;
-  right: 0;
 }
 
 /*# sourceMappingURL=style.css.map */

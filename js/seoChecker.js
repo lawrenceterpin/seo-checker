@@ -150,14 +150,14 @@ class SeoChecker {
             "</li>" +
             "</ul>" +
             "<div id='tabs-body' class='d-flex flex-direction-column h-100'>" +
-            "<div class='tabsContent d-flex flex-direction-column h-100 tab-1 p-1 open'>" +
-            "<ul class='d-flex mb-2'>" +
+            "<div class='tabsContent d-flex flex-direction-column tab-1 p-1 open'>" +
+            "<ul id='charts-seo-report' class='d-flex mb-2 p-1'>" +
             "<li class='col-4'><p class='m-0'><span class='tags-errors error'></span></p><canvas id='tags'></canvas></li>" +
             "<li class='col-4'><p class='m-0'><span class='length-errors error'></span></p><canvas id='length'></canvas></li>" +
             "<li class='col-4'><p class='m-0'><span class='attributes-errors error'></span></p><canvas id='attributs'></canvas></li>" +
             "</ul>" +
             "</div>" +
-            "<div class='tabsContent d-flex flex-direction-column h-100 tab-2 p-1'>" +
+            "<div class='tabsContent d-flex flex-direction-column tab-2 p-1'>" +
             "<ul id='seo-checker-tags-list' class='p-1'></ul>" +
             "</div>" +
             "</div></div>";

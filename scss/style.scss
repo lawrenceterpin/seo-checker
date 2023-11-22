@@ -18,20 +18,6 @@ body {
     transition: all 0.5s;
 }
 
-/* Mode contrasté */
-body.contrast-mode {
-    background-color: $black;
-    color: $white;
-
-    a {
-        color: $white;
-    }
-
-    .btn {
-        background: $purple;
-    }
-}
-
 a {
     text-decoration: none;
     color: $purple;
@@ -71,9 +57,4 @@ li {
 .round {
     border-radius: 50%;
     aspect-ratio: 1/1;
-}
-
-#contrast-button {
-    top: 0;
-    right: 0;
 }
