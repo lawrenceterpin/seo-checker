@@ -35,13 +35,12 @@ li {
     padding: 15px;
     cursor: pointer;
     border: none;
-    background: $white;
     border-radius: 25px;
     text-decoration: none;
     transition: all 0.5s;
 
     &:hover {
-        background-color: $purple;
+        background: $purple;
         color: $white;
     }
 }

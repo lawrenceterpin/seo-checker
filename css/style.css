@@ -199,13 +199,12 @@ li {
   padding: 15px;
   cursor: pointer;
   border: none;
-  background: #fff;
   border-radius: 25px;
   text-decoration: none;
   transition: all 0.5s;
 }
 .btn:hover {
-  background-color: #9C27B0;
+  background: #9C27B0;
   color: #fff;
 }
 

@@ -140,7 +140,7 @@ class SeoChecker {
         this.seoCheckerPanel.setAttribute('class', 'p-fixed p-1 d-flex flex-direction-column shadow black');
 
         this.seoCheckerPanel.innerHTML = "<div id='tabs' class='d-flex flex-direction-column'>" +
-            "<h2>SEO Checker</h2>" +
+            "<h2 class='purple'>SEO Checker</h2>" +
             "<ul id='tabsLabel' class='d-flex'>" +
             "<li id='tab-1' class='tabsLabel col-6 p-1 p-relative open'>" +
             "<h3 class='m-0'>Résumé</h3>" +

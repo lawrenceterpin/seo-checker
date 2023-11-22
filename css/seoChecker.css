@@ -174,12 +174,13 @@ figure {
 }
 
 #seo-checker-button {
-  bottom: 0;
+  top: 0;
   right: 0;
   z-index: 1001;
   cursor: pointer;
   border: none;
   background: #fff;
+  border: 4px solid #9C27B0;
   border-radius: 25px;
   aspect-ratio: 1/1;
   text-decoration: none;
@@ -192,7 +193,7 @@ figure {
 }
 #seo-checker-button > div .tags-errors {
   display: none;
-  bottom: 60px;
+  top: 60px;
   right: 0;
   z-index: 1002;
   width: 15px;
@@ -211,10 +212,6 @@ figure {
   background-color: #fff;
   transition: all 0.5s;
 }
-#seo-checker-panel h2,
-#seo-checker-panel h3 {
-  color: #000 !important;
-}
 #seo-checker-panel p {
   margin: 0;
 }
@@ -231,11 +228,17 @@ figure {
   background-color: gainsboro;
   cursor: pointer;
 }
+#seo-checker-panel #tabs #tabsLabel > li h3 {
+  color: #000;
+}
 #seo-checker-panel #tabs #tabsLabel > li.open {
   margin-bottom: -1px;
   border: 1px solid #000;
   border-bottom: 1px solid #fff;
   background-color: #fff;
+}
+#seo-checker-panel #tabs #tabsLabel > li.open h3 {
+  color: #9C27B0;
 }
 #seo-checker-panel #tabs #tabs-body {
   overflow: hidden;

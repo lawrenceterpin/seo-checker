@@ -1,7 +1,7 @@
 // Options Seo Checker
 var options = {
     panel: {
-        open: false,
+        open: true,
         displayChartsReport: true,
         displayTagsListReport: true
     }
