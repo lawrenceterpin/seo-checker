@@ -4,13 +4,17 @@
 @import "positions.scss";
 @import "colors.scss";
 
+$small: 20px;
+$medium: 30px;
+$big: 45px;
+
 html {
     scroll-behavior: smooth;
 }
 
 body {
     font-family: 'Poppins', sans-serif;
-    font-size: 20px;
+    font-size: $small;
     transition: all 0.5s;
 }
 

@@ -5,19 +5,12 @@
 @import "colors.scss";
 
 $seoCheckerPanelSize: 600px;
-
-details {
-    cursor: pointer;
-
-    &:hover {
-        font-weight: bold;
-    }
-}
+$zIndex: 1000;
 
 #seo-checker-button {
     bottom: 0;
     right: 0;
-    z-index: 1001;
+    z-index: calc($zIndex + 1);
     cursor: pointer;
     border: none;
     background: $white;
@@ -35,7 +28,7 @@ details {
             display: none;
             bottom: 60px;
             right: 0;
-            z-index: 1002;
+            z-index: calc($zIndex + 2);
             width: 15px;
             height: 15px;
             border-radius: 50%;
@@ -48,21 +41,15 @@ details {
     top: 0;
     right: 0;
     bottom: 0;
-    z-index: 1000;
-    padding: 15px;
+    z-index: $zIndex;
     width: $seoCheckerPanelSize;
-    margin-right: -630px;
+    margin-right: -$seoCheckerPanelSize - 30;
     background-color: $white;
     transition: all 0.5s;
-    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 
-    h2 {
-        margin: 0;
-        color: $black !important;
-    }
-
+    h2,
     h3 {
-        color: $black !important;   
+        color: $black !important;
     }
 
     p {
@@ -70,14 +57,46 @@ details {
     }
 
     &.open {
-        width: $seoCheckerPanelSize;
-        margin: 0;
+        margin-right: 0;
+    }
+
+    #tabs {
+        overflow: hidden;
+        height: 90%;
+
+        #tabsLabel {
+            >li {
+                border: 1px solid gainsboro;
+                color: $black;
+                background-color: gainsboro;
+                cursor: pointer;
+
+                &.open {
+                    margin-bottom: -1px;
+                    border: 1px solid $black;
+                    border-bottom: 1px solid $white;
+                    background-color: $white;
+                }
+            }
+        }
+
+        #tabs-body {
+            overflow: hidden;
+
+            >div {
+                display: none;
+
+                &.open {
+                    display: flex;
+                    border: 1px solid $black;
+                }
+            }
+        }
     }
 
     #seo-checker-tags-list {
         overflow-y: scroll;
         height: 100%;
-        padding: 15px;
         box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px inset, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px inset;
     }
 }

@@ -12,7 +12,7 @@ class SeoChecker {
     constructor(options) {
 
         this.options = options;
-        
+
         this.tagsErrors = 0;
         this.tagsSuccess = 0;
         this.lengthErrors = 0;
@@ -29,10 +29,12 @@ class SeoChecker {
                 seoRulesChildTags: [
                     {
                         name: "title",
+                        content: "innerText",
                         maxLength: 60
                     },
                     {
                         name: "meta",
+                        content: "content",
                         attributes: ["content"],
                         maxLength: 160
                     }
@@ -43,19 +45,24 @@ class SeoChecker {
                 seoRulesChildTags: [
                     {
                         name: "header",
+                        content: "innerText",
                     },
                     {
                         name: "main",
+                        content: "innerText",
                     },
                     {
                         name: "footer",
+                        content: "innerText",
                     },
                     {
                         name: "a",
+                        content: "innerText",
                         attributes: ["href", "title"]
                     },
                     {
                         name: "img",
+                        content: "innerText",
                         attributes: ["src", "alt"]
                     },
                 ]
@@ -65,10 +72,12 @@ class SeoChecker {
                 seoRulesChildTags: [
                     {
                         name: "h1",
+                        content: "innerText",
                         maxLength: 60
                     },
                     {
-                        name: "nav"
+                        name: "nav",
+                        content: "innerText",
                     },
                 ]
             },
@@ -77,14 +86,17 @@ class SeoChecker {
                 seoRulesChildTags: [
                     {
                         name: "h2",
+                        content: "innerText",
                         maxLength: 60
                     },
                 ]
             },
         ];
 
+        // Liste d'erreurs
         this.errors = [];
 
+        // Initialisation
         this.init();
     }
 
@@ -108,8 +120,13 @@ class SeoChecker {
             this.createChartsSeoReport();
         }
 
+        // Affichage du panneau
         this.panelDisplay();
 
+        // Onglets de navigation du panneau
+        this.switchTabs();
+
+        // Clic du bouton d'ouverture/fermeture du panneau
         this.seoCheckerButton.addEventListener('click', () => this.panelDisplay(), false);
     }
 
@@ -120,15 +137,30 @@ class SeoChecker {
         // Création du la div "#html5-checker"
         this.seoCheckerPanel = document.createElement('div');
         this.seoCheckerPanel.setAttribute('id', 'seo-checker-panel');
-        this.seoCheckerPanel.setAttribute('class', 'p-fixed d-flex flex-direction-column');
+        this.seoCheckerPanel.setAttribute('class', 'p-fixed p-1 d-flex flex-direction-column shadow');
 
-        this.seoCheckerPanel.innerHTML = "<h2 class='m-0'>SEO Checker</h2>" +
+        this.seoCheckerPanel.innerHTML = "<div id='tabs' class='d-flex flex-direction-column'>" +
+            "<h2>SEO Checker</h2>" +
+            "<ul id='tabsLabel' class='d-flex'>" +
+            "<li id='tab-1' class='tabsLabel col-6 p-1 p-relative open'>" +
+            "<h3 class='m-0'>Résumé</h3>" +
+            "</li>" +
+            "<li id='tab-2' class='tabsLabel col-6 p-1 p-relative'>" +
+            "<h3 class='m-0'>Rapport détaillé</h3>" +
+            "</li>" +
+            "</ul>" +
+            "<div id='tabs-body' class='d-flex flex-direction-column h-100'>" +
+            "<div class='tabsContent d-flex flex-direction-column h-100 tab-1 p-1 open'>" +
             "<ul class='d-flex mb-2'>" +
             "<li class='col-4'><p class='m-0'><span class='tags-errors error'></span></p><canvas id='tags'></canvas></li>" +
             "<li class='col-4'><p class='m-0'><span class='length-errors error'></span></p><canvas id='length'></canvas></li>" +
             "<li class='col-4'><p class='m-0'><span class='attributes-errors error'></span></p><canvas id='attributs'></canvas></li>" +
             "</ul>" +
-            "<ul id='seo-checker-tags-list'></ul>";
+            "</div>" +
+            "<div class='tabsContent d-flex flex-direction-column h-100 tab-2 p-1'>" +
+            "<ul id='seo-checker-tags-list' class='p-1'></ul>" +
+            "</div>" +
+            "</div></div>";
 
         document.body.prepend(this.seoCheckerPanel);
     }
@@ -189,8 +221,6 @@ class SeoChecker {
 
                     // On récupère la balise enfant dans le DOM
                     childTag = tag[i].getElementsByTagName(seoRulesChildTag.name);
-                    // Texte de la balise enfant
-                    childTagText = "";
 
                     childLi = document.createElement('li');
                     childLi.innerHTML = '<div class="' + ((childTag.length > 0) ? 'success' : 'error') + '">'
@@ -210,27 +240,16 @@ class SeoChecker {
                     // On répète la boucle en fonction du nombre de balise enfant
                     for (var j = 0; j < childTag.length; j++) {
 
-                        if (seoRulesChildTag.name == 'meta') {
+                        childTagText = (typeof childTag[j][seoRulesChildTag.content] !== 'undefined') ? childTag[j][seoRulesChildTag.content] : "";
 
-                            if (childTag[j].getAttribute('content') !== null) {
+                        content = '<ul class="ml-2 mt-1 mb-1 pb-1 border-bottom">';
 
-                                childTagText = childTag[j].getAttribute('content');
-                            }
-                        }
-                        else {
-
-                            if (typeof childTag[j].innerText !== 'undefined') {
-
-                                childTagText = childTag[j].innerText;
-                            }
-                        }
-
-                        content = (childTagText.length > 0) ? '<ul class="ml-2 mt-1 mb-1 pb-1 border-bottom"><li><div><strong>- Texte:</strong> ' + this.limit(childTagText, 20) + '... </div></li>' : '<ul class="ml-2 mt-1 mb-1 pb-1 border-bottom">';
+                        content += (childTagText.length > 0) ? '<li><div><strong>- Texte:</strong> ' + this.limit(childTagText, 20) + '... </div></li>' : '';
 
                         if (seoRulesChildTag.maxLength) {
 
                             if (childTag[j].getAttribute('charset') == null) {
-                                content += '<li class="' + ((childTagText.length > 0 && childTagText.length <= seoRulesChildTag.maxLength) ? 'success' : ' error') + '">- Longueur: ' + childTagText.length + '/' + seoRulesChildTag.maxLength + '</li>';
+                                content += '<li class="' + ((childTagText.length > 0 && childTagText.length <= seoRulesChildTag.maxLength) ? 'success' : ' error') + '">- ' + ((childTagText.length > 0 && childTagText.length <= seoRulesChildTag.maxLength) ? '✔' : '☓') + ' <strong>Longueur:</strong> ' + childTagText.length + '/' + seoRulesChildTag.maxLength + '</li>';
                             }
                         }
 
@@ -354,8 +373,8 @@ class SeoChecker {
                         label: ' Total',
                         data: [error.error, error.success],
                         backgroundColor: [
-                            'red',
-                            'green',
+                            '#e74c3c',
+                            '#27ae60',
                         ],
                         hoverOffset: 4
                     }]
@@ -384,7 +403,9 @@ class SeoChecker {
      */
     panelDisplay() {
 
-        if (this.panelIsOpen == true) {
+        this.panelIsOpen = (this.panelIsOpen) ? false : true;
+
+        if (this.panelIsOpen == false) {
             // On affiche le panneau de la liste des balises
             this.seoCheckerPanel.classList.add("open");
 
@@ -396,8 +417,6 @@ class SeoChecker {
 
             this.hidePanel();
         }
-
-        this.panelIsOpen = (this.panelIsOpen) ? false : true;
     }
 
     showPanel() {
@@ -410,5 +429,34 @@ class SeoChecker {
 
         this.seoCheckerButton.innerHTML = "<div><span class='p-fixed tags-errors p-1 align-items-center justify-content-center bg-error'></span></div>" +
             "&nbsp;<img src='images/seo.png' alt='Seo Checker'>&nbsp;";
+    }
+
+    switchTabs() {
+
+        var tabs = document.querySelectorAll('.tabsLabel');
+
+        tabs.forEach(tab => {
+
+            tab.addEventListener('click', function () {
+
+                tabs.forEach(tab => {
+                    if (tab.classList.contains('open')) {
+                        tab.classList.remove('open');
+                    }
+                });
+
+                tab.classList.add('open');
+                var tabsContent = document.querySelectorAll('.tabsContent');
+
+                tabsContent.forEach(tab => {
+                    if (tab.classList.contains('open')) {
+                        tab.classList.remove('open');
+                    }
+                });
+
+                var tabContent = document.querySelector('#tabs-body .' + this.id);
+                tabContent.classList.add('open');
+            });
+        });
     }
 };

@@ -19,6 +19,10 @@ img {
   width: 100%;
 }
 
+.h-100 {
+  height: 100%;
+}
+
 .col-4 {
   width: 33%;
 }
@@ -137,30 +141,23 @@ figure {
 }
 
 .bg-success {
-  background-color: green;
+  background-color: #27ae60;
 }
 
 .success {
-  color: green;
+  color: #27ae60;
 }
 
 .bg-error {
-  background-color: red;
+  background-color: #e74c3c;
 }
 
 .error {
-  color: red;
+  color: #e74c3c;
 }
 
 .border-bottom {
   border-bottom: 1px solid #000;
-}
-
-details {
-  cursor: pointer;
-}
-details:hover {
-  font-weight: bold;
 }
 
 #seo-checker-button {
@@ -196,17 +193,12 @@ details:hover {
   right: 0;
   bottom: 0;
   z-index: 1000;
-  padding: 15px;
   width: 600px;
   margin-right: -630px;
   background-color: #fff;
   transition: all 0.5s;
-  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 }
-#seo-checker-panel h2 {
-  margin: 0;
-  color: #000 !important;
-}
+#seo-checker-panel h2,
 #seo-checker-panel h3 {
   color: #000 !important;
 }
@@ -214,13 +206,37 @@ details:hover {
   margin: 0;
 }
 #seo-checker-panel.open {
-  width: 600px;
-  margin: 0;
+  margin-right: 0;
+}
+#seo-checker-panel #tabs {
+  overflow: hidden;
+  height: 90%;
+}
+#seo-checker-panel #tabs #tabsLabel > li {
+  border: 1px solid gainsboro;
+  color: #000;
+  background-color: gainsboro;
+  cursor: pointer;
+}
+#seo-checker-panel #tabs #tabsLabel > li.open {
+  margin-bottom: -1px;
+  border: 1px solid #000;
+  border-bottom: 1px solid #fff;
+  background-color: #fff;
+}
+#seo-checker-panel #tabs #tabs-body {
+  overflow: hidden;
+}
+#seo-checker-panel #tabs #tabs-body > div {
+  display: none;
+}
+#seo-checker-panel #tabs #tabs-body > div.open {
+  display: flex;
+  border: 1px solid #000;
 }
 #seo-checker-panel #seo-checker-tags-list {
   overflow-y: scroll;
   height: 100%;
-  padding: 15px;
   box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px inset, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px inset;
 }
 

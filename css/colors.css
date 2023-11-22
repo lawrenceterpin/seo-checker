@@ -15,19 +15,19 @@
 }
 
 .bg-success {
-  background-color: green;
+  background-color: #27ae60;
 }
 
 .success {
-  color: green;
+  color: #27ae60;
 }
 
 .bg-error {
-  background-color: red;
+  background-color: #e74c3c;
 }
 
 .error {
-  color: red;
+  color: #e74c3c;
 }
 
 .border-bottom {
