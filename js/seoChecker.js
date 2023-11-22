@@ -137,7 +137,7 @@ class SeoChecker {
         // Création du la div "#html5-checker"
         this.seoCheckerPanel = document.createElement('div');
         this.seoCheckerPanel.setAttribute('id', 'seo-checker-panel');
-        this.seoCheckerPanel.setAttribute('class', 'p-fixed p-1 d-flex flex-direction-column shadow');
+        this.seoCheckerPanel.setAttribute('class', 'p-fixed p-1 d-flex flex-direction-column shadow black');
 
         this.seoCheckerPanel.innerHTML = "<div id='tabs' class='d-flex flex-direction-column'>" +
             "<h2>SEO Checker</h2>" +
