@@ -8,4 +8,4 @@ var options = {
 }
 
 // Initialisation de Seo Checker
-seoChecker = new SeoChecker(options);
+new SeoChecker();

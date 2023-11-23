@@ -11,7 +11,18 @@ class SeoChecker {
 
     constructor(options) {
 
-        this.options = options;
+        if (typeof options !== 'undefined') {
+            this.options = options;
+        }
+        else {
+            this.options = {
+                panel: {
+                    open: false,
+                    displayChartsReport: true,
+                    displayTagsListReport: true
+                }
+            };
+        }
 
         this.tagsErrors = 0;
         this.tagsSuccess = 0;

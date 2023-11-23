@@ -156,3 +156,10 @@ pre.code-javascript code {
 pre.code-jquery code {
     color: #4dd0e1;
 }
+
+@media (max-width: 480px) {
+
+    header {
+        flex-direction: column;
+    }
+}
