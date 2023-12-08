@@ -433,7 +433,7 @@ class SeoChecker {
     showPanel() {
 
         this.seoCheckerButton.innerHTML = "<div><span class='p-fixed tags-errors p-1 align-items-center justify-content-center bg-error'></span></div>" +
-            "&nbsp;<i class='fa fa-close'></i>&nbsp;";
+            "&nbsp;<i class='fa fa-times'></i>&nbsp;";
     }
 
     hidePanel() {
