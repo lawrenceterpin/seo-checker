@@ -439,7 +439,7 @@ class SeoChecker {
     hidePanel() {
 
         this.seoCheckerButton.innerHTML = "<div><span class='p-fixed tags-errors p-1 align-items-center justify-content-center bg-error'></span></div>" +
-            "&nbsp;<img src='images/seo.png' alt='Seo Checker'>&nbsp;";
+            "&nbsp;<img src='https://lawrenceterpin.github.io/seo-checker/images/seo.png' alt='Seo Checker'>&nbsp;";
     }
 
     switchTabs() {
