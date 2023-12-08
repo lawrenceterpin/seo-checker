@@ -245,7 +245,7 @@ figure {
 }
 #seo-checker-panel #tabs #tabs-body > div {
   display: none;
-  height: 85%;
+  height: 80%;
 }
 #seo-checker-panel #tabs #tabs-body > div.open {
   display: flex;
